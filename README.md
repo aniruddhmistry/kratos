@@ -8,6 +8,8 @@ Project Kratos Supports an approach of Recon Methodology. Currently, this tool s
 1. Small Scope (single Domain/IP in scope): Performs a limited recon & is useful when only a few URLs are provided in the scope
 2. Medium Scope (*.target.com in scope) : Performs recon to enumerate more assets and give you more options to attack on.
 
+<img align="center" alt="img" src="https://github.com/aniruddhmistry/kratos/blob/main/Recon%20-%20Mind-map-Map%201.png" width="100%" height="auto" />
+
 ## Pre-Requisite
 
 Make sure to have the "Docker Hub" installed on your machine.
