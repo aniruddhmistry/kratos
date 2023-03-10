@@ -1,20 +1,35 @@
 FROM alpine:latest
 
-RUN apk update 
-RUN apk add git 
-RUN apk add bash 
-RUN apk add curl 
-RUN apk add python 
-RUN apk add go
+# Install necessary packages
+RUN apk add --no-cache go git curl python3
 
-RUN curl -L https://github.com/projectdiscovery/subfinder/releases/download/v2.4.5/subfinder_2.4.5_linux_amd64.tar.gz --output subfinder.tar.gz \
-    && tar -xzf subfinder.tar.gz \
-    && mv subfinder_2.4.5_linux_amd64/subfinder /usr/local/bin/subfinder \
-    && rm -rf subfinder_2.4.5_linux_amd64 \
-    && rm subfinder.tar.gz
+# Set environment variables
+ENV GOROOT=/usr/lib/go \
+    GOPATH=/go \
+    PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-COPY script.sh /
+# Install Project Discovery tools
+RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+RUN go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+RUN go install -v github.com/projectdiscovery/notify/cmd/notify@latest
+RUN go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest
+#RUN go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+RUN go install -v github.com/ffuf/ffuf/v2@latest
+#RUN go install -v github.com/tomnomnom/gf
+RUN go install github.com/bp0lr/gauplus@latest
+RUN go install github.com/tomnomnom/waybackurls@latest
 
-RUN chmod +x /script.sh
+#RUN go install github.com/ffuf/ffuf/v2@latest
+#RUN go install github.com/ffuf/ffuf/v2@latest
 
-CMD ["/script.sh"]
+# Create script and output folders
+RUN mkdir -p /root/script /root/output /root/tools
+
+# Copy a sample script
+COPY script.sh /root/script/script.sh
+RUN chmod +x /root/script/script.sh
+
+# Set the working directory
+WORKDIR /root
