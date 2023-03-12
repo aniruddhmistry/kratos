@@ -3,6 +3,16 @@ FROM alpine:latest
 # Install necessary packages
 RUN apk add --no-cache go git curl python3
 
+RUN apk update && \
+    apk add figlet mlocate && \
+    rm -rf /var/cache/apk/*
+
+RUN  apk add ruby; gem install lolcat;   \
+     apk del ca-certificates ruby-dev;    \
+     rm -rf /usr/share/terminfo /usr/share/ca-certificates /var/cache /etc/ssl \
+        /etc/terminfo /lib/libssl.so.1.1 /lib/libcrypto.so.1.1   \
+        /usr/lib/ruby/gems/2.7.0/cache /usr/lib/ruby/2.7.0/x86_64-linux-musl/enc
+
 # Set the GOPATH environment variable
 ENV GOPATH /go
 
@@ -11,7 +21,16 @@ ENV PATH="${PATH}:${GOPATH}/bin:/usr/local/go/bin"
 
 # for add command in bashrc & bash_profile file 
 # RUN echo "<code>" >> ~/.bashrc && echo "<code>" >> ~/.bash_profile
+
+RUN echo "figlet -f big "Recon Machine" | lolcat       #Terminal Banner" >> ~/.recon \
+    && echo "echo -e "Usages -  kratos example.com\n" | lolcat" >> ~/.recon \
+    && echo "kratos(){" >> ~/.recon \
+    && echo "/bin/bash ~/script/kratos.sh $1" >> ~/.recon \
+    && echo "}" >> ~/.recon
+
 RUN echo "source ~/.recon" >> ~/.bashrc
+
+RUN echo "source ~/.bashrc" >> ~/.bash_profile
 
 # Install Project Discovery tools
 RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
@@ -34,7 +53,6 @@ RUN mkdir -p /root/script /root/output /root/tools
 
 # Copy a sample script
 COPY kratos.sh /root/script/kratos.sh
-COPY .recon ~/
 RUN chmod +x /root/script/kratos.sh
 
 # Set the working directory
