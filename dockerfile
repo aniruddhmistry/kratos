@@ -3,10 +3,13 @@ FROM alpine:latest
 # Install necessary packages
 RUN apk add --no-cache go git curl python3
 
+# for add command in bashrc & bash_profile file 
+# RUN echo "<code>" >> ~/.bashrc && echo "<code>" >> ~/.bash_profile
+
 # Set environment variables
-ENV GOROOT=/usr/lib/go \
-    GOPATH=/go \
-    PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+ENV GOPATH /usr/local/go
+
+WORKDIR $GOPATH
 
 # Install Project Discovery tools
 RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
