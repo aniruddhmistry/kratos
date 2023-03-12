@@ -1,10 +1,10 @@
+export PATH=$PATH:/usr/local/go/bin
 figlet -f big "Recon Machine" | lolcat       #Terminal Banner
 echo -e "Usages -  kratos example.com\n" | lolcat
-
 kratos(){
-/bin/bash ~/script/single_domain.sh $1
+/bin/bash ~/script/kratos.sh $1
 }
 
 showscript(){
-nano ~/script/single_domain.sh
+nano ~/script/kratos.sh
 }
