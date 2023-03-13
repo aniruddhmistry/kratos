@@ -21,9 +21,9 @@ RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 RUN go install -v github.com/projectdiscovery/notify/cmd/notify@latest
 RUN go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest
-#RUN go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+RUN go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 RUN go install -v github.com/ffuf/ffuf/v2@latest
-#RUN go install -u github.com/tomnomnom/gf
+RUN go install github.com/tomnomnom/gf@latest
 RUN go install github.com/bp0lr/gauplus@latest
 RUN go install github.com/tomnomnom/waybackurls@latest
 
