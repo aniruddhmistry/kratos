@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Install necessary packages
-RUN apk add --no-cache go git curl python3
+RUN apk add --no-cache go git curl python3 nano
 
 RUN apk update && \
     apk add figlet mlocate && \
@@ -31,6 +31,10 @@ RUN echo "figlet -f big "Recon Machine" | lolcat       #Terminal Banner" >> ~/.r
 RUN echo "source ~/.recon" >> ~/.bashrc
 
 RUN echo "source ~/.bashrc" >> ~/.bash_profile
+
+RUN source ~/.recon
+RUN source ~/.bashrc
+RUN source ~/.bash_profile
 
 # Install Project Discovery tools
 RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
